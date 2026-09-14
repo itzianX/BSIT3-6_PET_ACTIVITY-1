@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Student Bio-Data | CITE</title>
+
+<style>
+:root{
+  --navy:#243b53;
+  --navy-dark:#16293d;
+  --gold:#d89b4a;
+  --green:#5f7f68;
+  --green-bg:#e7f0e8;
+  --blue:#527795;
+  --blue-bg:#e7f0f6;
+  --red:#a85454;
+  --red-bg:#f6e7e7;
+  --cream:#f7f5f0;
+  --white:#fff;
+  --text:#25313c;
+  --muted:#7b8791;
+  --border:#e3e7ea;
+  --shadow:0 12px 35px rgba(30,45,60,.07);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--text);
+  font-family:"Segoe UI",Arial,sans-serif;
+  line-height:1.5;
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:230px;
+  min-height:100vh;
+  position:fixed;
+  inset:0 auto 0 0;
+  padding:28px 20px;
+  background:linear-gradient(160deg,var(--navy),var(--navy-dark));
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  z-index:10;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:45px;
+}
+
+.brand-logo{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+.brand-text strong{
+  display:block;
+  font-size:14px;
+}
+
+.brand-text span{
+  display:block;
+  margin-top:2px;
+  color:#ffffff80;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.side-title{
+  margin-bottom:12px;
+  color:#ffffff66;
+  font-size:9px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+}
+
+.side-nav{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.side-nav a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:10px 11px;
+  border-radius:9px;
+  color:#ffffffa8;
+  text-decoration:none;
+  font-size:12px;
+  transition:.2s;
+}
+
+.side-nav a:hover,
+.side-nav a.active{
+  background:#ffffff12;
+  color:#fff;
+}
+
+.side-icon{
+  width:28px;
+  height:28px;
+  border-radius:7px;
+  display:grid;
+  place-items:center;
+  background:#ffffff0d;
+  font-size:9px;
+}
+
+.side-bottom{
+  margin-top:auto;
+  padding:15px;
+  border:1px solid #ffffff10;
+  border-radius:11px;
+  background:#ffffff0a;
+}
+
+.side-bottom small{
+  display:block;
+  margin-bottom:4px;
+  color:#ffffff66;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.side-bottom strong{
+  font-size:11px;
+}
+
+/* MAIN */
+
+.main{
+  width:calc(100% - 230px);
+  margin-left:230px;
+}
+
+.topbar{
+  height:64px;
+  padding:0 36px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#fffffff2;
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(10px);
+}
+
+.breadcrumb{
+  display:flex;
+  gap:7px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.breadcrumb strong{color:var(--text)}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 10px;
+  border-radius:20px;
+  background:var(--green-bg);
+  color:var(--green);
+  font-size:10px;
+  font-weight:700;
+}
+
+.status-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#70a47c;
+}
+
+/* HERO */
+
+.hero{
+  margin:30px 36px 24px;
+  padding:35px 38px;
+  position:relative;
+  overflow:hidden;
+  border-radius:19px;
+  background:linear-gradient(135deg,#29435d,#1d3044);
+  color:#fff;
+  box-shadow:var(--shadow);
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-90px;
+  top:-120px;
+  border-radius:50%;
+  background:#d89b4a20;
+}
+
+.hero-content{
+  position:relative;
+  z-index:1;
+}
+
+.hero-label{
+  display:inline-block;
+  margin-bottom:13px;
+  padding:6px 10px;
+  border:1px solid #ffffff18;
+  border-radius:20px;
+  background:#ffffff0d;
+  color:#ffffffbf;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+}
+
+.hero h1{
+  margin:0 0 8px;
+  font-size:31px;
+  letter-spacing:-.02em;
+}
+
+.hero p{
+  max-width:620px;
+  margin:0;
+  color:#ffffffa8;
+  font-size:13px;
+}
+
+/* CONTENT */
+
+.content{
+  padding:0 36px 50px;
+}
+
+form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.section{
+  padding:22px 24px 5px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 6px 25px #1e2d3c08;
+}
+
+.section:hover{
+  box-shadow:var(--shadow);
+}
+
+.section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.section-icon{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.personal .section-icon{
+  background:var(--green-bg);
+  color:var(--green);
+}
+
+.academic .section-icon{
+  background:var(--blue-bg);
+  color:var(--blue);
+}
+
+.family .section-icon{
+  background:var(--red-bg);
+  color:var(--red);
+}
+
+.contact .section-icon{
+  background:#f6ead8;
+  color:var(--gold);
+}
+
+.section-title h2{
+  margin:0;
+  font-size:14px;
+}
+
+.section-title span{
+  display:block;
+  margin-top:1px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.section-number{
+  width:27px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#f4f5f5;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:700;
+}
+
+/* FIELDS */
+
+.row-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.row-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  color:#69747d;
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+label:after{
+  content:" *";
+  color:#bd6b5b;
+}
+
+input,
+select{
+  width:100%;
+  height:41px;
+  padding:0 11px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#fafbfb;
+  color:var(--text);
+  font:13px "Segoe UI",Arial,sans-serif;
+  transition:.18s;
+}
+
+input::placeholder{
+  color:#aab1b7;
+}
+
+input:hover,
+select:hover{
+  border-color:#ccd3d8;
+  background:#fff;
+}
+
+input:focus,
+select:focus{
+  outline:0;
+  border-color:var(--blue);
+  background:#fff;
+  box-shadow:0 0 0 3px #52779519;
+}
+
+select{
+  cursor:pointer;
+}
+
+/* SUBMIT */
+
+.submit-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:19px 23px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.submit-info{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.submit-check{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--green-bg);
+  color:var(--green);
+  font-size:10px;
+  font-weight:700;
+}
+
+.submit-info strong{
+  display:block;
+  font-size:12px;
+}
+
+.submit-info span{
+  display:block;
+  margin-top:1px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+button{
+  min-width:175px;
+  height:44px;
+  padding:0 22px;
+  border:0;
+  border-radius:9px;
+  background:linear-gradient(135deg,var(--navy),#31536e);
+  color:#fff;
+  font:700 12px "Segoe UI",Arial,sans-serif;
+  cursor:pointer;
+  box-shadow:0 7px 18px #243b5330;
+  transition:.2s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px #243b5340;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+  .sidebar{width:200px}
+  .main{width:calc(100% - 200px);margin-left:200px}
+  .topbar,.content{padding-left:24px;padding-right:24px}
+  .hero{margin-left:24px;margin-right:24px}
+  .row-3{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:760px){
+  .page{display:block}
+
+  .sidebar{
+    width:100%;
+    min-height:auto;
+    position:relative;
+    padding:18px 20px;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .brand{margin:0}
+  .side-title,.side-nav,.side-bottom{display:none}
+
+  .main{
+    width:100%;
+    margin:0;
+  }
+
+  .topbar{
+    position:relative;
+  }
+}
+
+@media(max-width:600px){
+  .topbar{padding:0 16px}
+  .breadcrumb{display:none}
+  .content{padding:0 14px 35px}
+  .hero{margin:20px 14px;padding:27px 22px}
+  .hero h1{font-size:26px}
+  .row-2,.row-3{grid-template-columns:1fr}
+  .section{padding:20px 17px 4px}
+  .submit-card{flex-direction:column;align-items:stretch}
+  button{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<aside class="sidebar">
+
+  <div class="brand">
+    <div class="brand-logo">CITE</div>
+    <div class="brand-text">
+      <strong>Student Records</strong>
+      <span>Bio-Data</span>
+    </div>
+  </div>
+
+  <div class="side-title">Form Sections</div>
+
+  <nav class="side-nav">
+    <a href="#personal" class="active"><span class="side-icon">01</span>Personal Information</a>
+    <a href="#academic"><span class="side-icon">02</span>Academic Details</a>
+    <a href="#family"><span class="side-icon">03</span>Family & Guardian</a>
+    <a href="#contact"><span class="side-icon">04</span>Contact Information</a>
+  </nav>
+
+  <div class="side-bottom">
+    <small>Document</small>
+    <strong>Student Personal Bio-Data</strong>
+  </div>
+
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="breadcrumb">Student Records <span>/</span> <strong>Bio-Data Form</strong></div>
+  <div class="status"><span class="status-dot"></span>Registration Form</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">CITE Registrar's Office</div>
+    <h1>Student Personal Bio-Data</h1>
+    <p>Please provide accurate information below. This form contains your personal, academic, family, and contact information for your student record.</p>
+  </div>
+</section>
+
+<div class="content">
+
+<form action="/register" method="POST">
+
+<section class="section personal" id="personal">
+
+  <div class="section-header">
+    <div class="section-title">
+      <div class="section-icon">ID</div>
+      <div>
+        <h2>Personal Information</h2>
+        <span>Basic information about the student</span>
+      </div>
+    </div>
+    <div class="section-number">01</div>
+  </div>
+
+  <div class="row-2">
+    <div class="field">
+      <label for="student_id">Student ID</label>
+      <input type="text" id="student_id" name="student_id" placeholder="09-2425-000914" required>
+    </div>
+
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" required>
+    </div>
+  </div>
+
+  <div class="row-3">
+    <div class="field">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" min="0" placeholder="21" required>
+    </div>
+
+    <div class="field">
+      <label for="gender">Gender</label>
+      <input type="text" id="gender" name="gender" placeholder="Male" required>
+    </div>
+
+    <div class="field">
+      <label for="civil_status">Civil Status</label>
+      <input type="text" id="civil_status" name="civil_status" placeholder="Single" required>
+    </div>
+  </div>
+
+  <div class="row-3">
+    <div class="field">
+      <label for="date_of_birth">Date of Birth</label>
+      <input type="date" id="date_of_birth" name="date_of_birth" required>
+    </div>
+
+    <div class="field">
+      <label for="place_of_birth">Place of Birth</label>
+      <input type="text" id="place_of_birth" name="place_of_birth" placeholder="Calinog, Iloilo" required>
+    </div>
+
+    <div class="field">
+      <label for="citizenship">Citizenship</label>
+      <input type="text" id="citizenship" name="citizenship" placeholder="Filipino" required>
+    </div>
+  </div>
+
+  <div class="row-2">
+    <div class="field">
+      <label for="religion">Religion</label>
+      <input type="text" id="religion" name="religion" placeholder="Roman Catholic" required>
+    </div>
+
+    <div class="field">
+      <label for="occupation">Occupation</label>
+      <input type="text" id="occupation" name="occupation" placeholder="Student" required>
+    </div>
+  </div>
+
+</section>
+
+<section class="section academic" id="academic">
+
+  <div class="section-header">
+    <div class="section-title">
+      <div class="section-icon">AC</div>
+      <div>
+        <h2>Academic Details</h2>
+        <span>Current educational information</span>
+      </div>
+    </div>
+    <div class="section-number">02</div>
+  </div>
+
+  <div class="row-3">
+
+    <div class="field">
+      <label for="university">University</label>
+      <input type="text" id="university" name="university" placeholder="Phinma University of Iloilo" required>
+    </div>
+
+    <div class="field">
+      <label for="course">Course</label>
+      <input type="text" id="course" name="course" placeholder="BS Information Technology" required>
+    </div>
+
+    <div class="field">
+      <label for="year_level">Year Level</label>
+      <select id="year_level" name="year_level" required>
+        <option value="" disabled selected>Select</option>
+        <option>1st Year</option>
+        <option>2nd Year</option>
+        <option>3rd Year</option>
+        <option>4th Year</option>
+      </select>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section family" id="family">
+
+  <div class="section-header">
+    <div class="section-title">
+      <div class="section-icon">FM</div>
+      <div>
+        <h2>Family & Guardian</h2>
+        <span>Parent and guardian information</span>
+      </div>
+    </div>
+    <div class="section-number">03</div>
+  </div>
+
+  <div class="row-3">
+
+    <div class="field">
+      <label for="father_name">Father's Name</label>
+      <input type="text" id="father_name" name="father_name" placeholder="Father's full name" required>
+    </div>
+
+    <div class="field">
+      <label for="father_occupation">Father's Occupation</label>
+      <input type="text" id="father_occupation" name="father_occupation" placeholder="Occupation" required>
+    </div>
+
+    <div class="field">
+      <label for="mother_name">Mother's Name</label>
+      <input type="text" id="mother_name" name="mother_name" placeholder="Mother's full name" required>
+    </div>
+
+    <div class="field">
+      <label for="mother_occupation">Mother's Occupation</label>
+      <input type="text" id="mother_occupation" name="mother_occupation" placeholder="Occupation" required>
+    </div>
+
+    <div class="field">
+      <label for="guardian_name">Guardian Name</label>
+      <input type="text" id="guardian_name" name="guardian_name" placeholder="Guardian's full name" required>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section contact" id="contact">
+
+  <div class="section-header">
+    <div class="section-title">
+      <div class="section-icon">CT</div>
+      <div>
+        <h2>Contact Information</h2>
+        <span>How the school can contact you</span>
+      </div>
+    </div>
+    <div class="section-number">04</div>
+  </div>
+
+  <div class="row-3">
+
+    <div class="field">
+      <label for="mobile_number">Mobile Number</label>
+      <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{11}" placeholder="09XXXXXXXXX" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="example@email.com" required>
+    </div>
+
+    <div class="field">
+      <label for="ice_cream">Do you like ice cream?</label>
+      <select id="ice_cream" name="ice_cream" required>
+        <option value="" disabled selected>Select</option>
+        <option>Yes</option>
+        <option>No</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="row-2">
+    <div class="field full">
+      <label for="current_address">Current Address</label>
+      <input type="text" id="current_address" name="current_address" placeholder="House No., Street, Barangay, City, Province" required>
+    </div>
+  </div>
+
+</section>
+
+<div class="submit-card">
+
+  <div class="submit-info">
+    <div class="submit-check">OK</div>
+    <div>
+      <strong>Ready to submit?</strong>
+      <span>Please review your information before submitting.</span>
+    </div>
+  </div>
+
+  <button type="submit">Submit Bio-Data</button>
+
+</div>
+
+</form>
+</div>
+</main>
+</div>
+
+</body>
+</html>
